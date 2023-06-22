@@ -34,7 +34,7 @@ class CalculatorServiceTest {
 
     @Test
     void calculateValidInput() throws InvalidOperationException {
-        String input = "1'+'1";
+        String input = "1 + 1";
         when(operationFactory.getOperation(OperationsEnum.ADD)).thenReturn(additionOperation);
         when(additionOperation.operate(anyDouble(), anyDouble())).thenReturn(1.0);
         when(validator.supports(any())).thenReturn(true);

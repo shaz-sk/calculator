@@ -27,7 +27,8 @@ class InputValidatorTest {
     }
 
     @ParameterizedTest(name = "should return calculated result for input \"{0}\"")
-    @ValueSource(strings = {"1'+'1", "2.9'*'3.0005", "1990909'/'2", "0.009'-'0.008"})
+    @ValueSource(strings = {"1 + 1", "2.9 * 3.0005", "1990909 / 2", "0.009 - 0.008",
+            "  76 + 1  ", "7  * 5"})
     public void validateValidInput(String input) {
         errors = new BindException(input, "String");
         inputValidator.validate(input, errors);
@@ -36,16 +37,16 @@ class InputValidatorTest {
 
     @Test
     public void validateInvalidInputLength() {
-        String input = "1'+";
+        String input = "1 + ";
         errors = new BindException(input, "String");
         inputValidator.validate(input, errors);
         assertTrue(errors.hasErrors());
-        assertEquals("Input incomplete", errors.getBindingResult().getAllErrors().get(0).getCode());
+        assertEquals("Invalid input", errors.getBindingResult().getAllErrors().get(0).getCode());
     }
 
     @Test
     public void validateInvalidInputOperand1() {
-        String input = "r'+'1";
+        String input = "r + 1";
         errors = new BindException(input, "String");
         inputValidator.validate(input, errors);
         assertTrue(errors.hasErrors());
@@ -54,7 +55,7 @@ class InputValidatorTest {
 
     @Test
     public void validateInvalidInputOperand2() {
-        String input = "1'+'r";
+        String input = "1 + r";
         errors = new BindException(input, "String");
         inputValidator.validate(input, errors);
         assertTrue(errors.hasErrors());
@@ -63,7 +64,7 @@ class InputValidatorTest {
 
     @Test
     public void validateInvalidInputOperation() {
-        String input = "4'&'1";
+        String input = "4 & 1";
         errors = new BindException(input, "String");
         inputValidator.validate(input, errors);
         assertTrue(errors.hasErrors());
@@ -72,7 +73,7 @@ class InputValidatorTest {
 
     @Test
     public void validateInvalidDivisionOperand() {
-        String input = "1'/'0";
+        String input = "1 / 0";
         errors = new BindException(input, "String");
         inputValidator.validate(input, errors);
         assertTrue(errors.hasErrors());

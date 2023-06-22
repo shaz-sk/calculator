@@ -19,9 +19,9 @@ public class InputValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         String input = (String) target;
-        String[] inputValues = input.split("'");
+        String[] inputValues = input.trim().split("\\s+");
         if (inputValues.length != 3) {
-            errors.reject("Input incomplete");
+            errors.reject("Invalid input");
             return;
         }
         Pattern pattern = Pattern.compile("[0-9]+[.]?[0-9]*");

@@ -48,7 +48,7 @@ public class CalculatorService {
         if(bindingResult.hasErrors()){
             throw new InvalidInputException(bindingResult);
         }
-        String[] inputValues = input.split("'");
+        String[] inputValues = input.trim().split("\\s+");
         return new InputDto( Double.parseDouble(inputValues[0]),Double.parseDouble(inputValues[2]),
                 OperationsEnum.getByValue(inputValues[1]));
 
